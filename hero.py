@@ -1,6 +1,9 @@
 from random import choice
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
+
+
 class Hero:
 
     def __init__(self, name, starting_health=100):
@@ -10,9 +13,7 @@ class Hero:
         self.abilities = list()
         self.armors = list()
 
-    def fight(self, opponent):
-        winner = choice([self, opponent])
-        print(f"The winner is {winner.name}!")
+    
 
     def add_ability(self, ability):
         self.abilities.append(ability)
@@ -26,28 +27,47 @@ class Hero:
     def add_armor(self, armor): 
         self.armors.append(armor)
 
+    def add_weapon(self, weapon):
+        '''Add weapon to self.abilities'''
+        # This method will append the weapon object passed in as an
+        # argument to self.abilities.
+        self.abilities.append(weapon)
+        # This means that self.abilities will be a list of
+        # abilities and weapons.
+        print(f"{self.name} has the weapon {weapon.name} and it is added to their abilities")
+
+
 
     def defend(self, incoming_damage: int):
-        
+        block_amt = 0
+        # basically just like the attack method using a for loop. 
+        for armor in self.armors:
+            block_amt += armor.block()
+        return incoming_damage - block_amt
+
+    def take_damage(self, damage):
+        self.current_health -= self.defend(damage)
+        print(f"{self.name} has taken {damage} damage. Their updated health is {self.current_health}")
 
 
+    def is_alive(self):
+        if self.current_health <= 0:
+            print(f"The hero {self.name}, is no longer alive.")
+        elif self.current_health > 0: 
+            print(f"The hero {self.name}, is alive")
 
-    #def take_damage(self, damage):
 
+    
 
-
-    #def is_alive(self):
-
+    
+            
 if __name__ == "__main__":
     # If you run this file from the terminal
-    # this block of code is executed.
-    ability = Ability("Great Debugging", 50)
-    another_ability = Ability("Smarty Pants", 90)
-    hero = Hero("Grace Hopper", 200)
-    hero.add_ability(ability)
-    hero.add_ability(another_ability)
+    # this block is executed.
+    hero = Hero("Wonder Woman")
+    weapon = Weapon("Lasso of Truth", 90)
+    hero.add_weapon(weapon)
     print(hero.attack())
-
 
 
 
