@@ -1,1 +1,0 @@
-#s o m e c o d e
