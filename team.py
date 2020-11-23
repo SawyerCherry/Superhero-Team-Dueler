@@ -58,10 +58,10 @@ class Team:
 
             # 3) update the list of living_heroes and living_opponents to reflect the result of fight 
             for hero in living_heroes:
-                if big_loser == hero.name:
+                if big_loser.name == hero.name:
                     living_heroes.remove(hero)
             for opponent in living_opponents:
-                if big_loser == opponent.name:
+                if big_loser.name == opponent.name:
                     living_opponents.remove(opponent)
 
            

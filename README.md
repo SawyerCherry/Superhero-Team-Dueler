@@ -1,1 +1,2 @@
 # Superhero-Team-Dueler
+This takes in the amount of people that you want on each team, for each hero you can add armor, ability, and a weapon. then you make them duke it out, It displays their K/D ratio and tells who died.

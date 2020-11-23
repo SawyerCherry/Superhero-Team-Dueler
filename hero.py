@@ -15,35 +15,34 @@ class Hero:
         self.deaths = 0
         self.kills = 0
 
-    
 
     def add_ability(self, ability):
         self.abilities.append(ability)
 
     def fight(self, opponent):
-        if self.is_alive() is True:
+        while self.is_alive() is True and opponent.is_alive() is True:
             opponent.take_damage(self.attack())
-        else:
+            if opponent.is_alive is True: 
+                self.take_damage(opponent.attack())
+        
+        if self.is_alive() is False:
             opponent.add_kill(1)
             self.add_death(1)
-            print(f"{self.name} is dead :(")
-            return self.name
-        if opponent.is_alive() is True:
-            self.take_damage(opponent.attack())
-        else:
+            print(f"{opponent.name} has won, {self.name} has been defeated.")
+            return self
+
+        if opponent.is_alive() is False:
             self.add_kill(1)
             opponent.add_death(1)
-            print(f"{opponent.name} is dead :(")
-            return opponent.name
-        self.fight(opponent)
+            print(f"{self.name} has won, {opponent.name} has been defeated.")
+            return opponent
 
-
-    
     def add_armor(self, armor): 
         self.armors.append(armor)
 
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
+        print(weapon.name)
         print(f"{self.name} has the weapon {weapon.name} and it is added to their abilities")
 
     def attack(self):
@@ -63,27 +62,15 @@ class Hero:
         self.current_health -= self.defend(damage)
         print(f"{self.name} has taken {damage} damage. Their updated health is {self.current_health}")
 
-
+    # I had to redo this one because I wasnt returniing a Bool and it was throwing my code off.
     def is_alive(self):
-        if self.current_health <= 0:
-            print(f"The hero {self.name}, is very much dead :(")
-        elif self.current_health > 0: 
-            print(f"The hero {self.name}, is alive")
+        if self.current_health < 1:
+            return False
+        elif self.current_health > 0:
+            return True
 
     def add_kill(self, num_kills):
         self.kills += num_kills
 
     def add_death(self, num_deaths):
         self.deaths += num_deaths
-
-    
-
-
-    
-
-    
-
-
-
-
-
