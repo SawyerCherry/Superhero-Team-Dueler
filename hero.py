@@ -12,31 +12,45 @@ class Hero:
         self.current_health = starting_health
         self.abilities = list()
         self.armors = list()
+        self.deaths = 0
+        self.kills = 0
 
     
 
     def add_ability(self, ability):
         self.abilities.append(ability)
 
-    def attack(self):
-        total_damage = 0
-        for ability in self.abilities:
-            total_damage += ability.attack()
-        return total_damage
+    def fight(self, opponent):
+        if self.is_alive() is True:
+            opponent.take_damage(self.attack())
+        else:
+            opponent.add_kill(1)
+            self.add_death(1)
+            print(f"{self.name} is dead :(")
+            return self.name
+        if opponent.is_alive() is True:
+            self.take_damage(opponent.attack())
+        else:
+            self.add_kill(1)
+            opponent.add_death(1)
+            print(f"{opponent.name} is dead :(")
+            return opponent.name
+        self.fight(opponent)
+
+
     
     def add_armor(self, armor): 
         self.armors.append(armor)
 
     def add_weapon(self, weapon):
-        '''Add weapon to self.abilities'''
-        # This method will append the weapon object passed in as an
-        # argument to self.abilities.
         self.abilities.append(weapon)
-        # This means that self.abilities will be a list of
-        # abilities and weapons.
         print(f"{self.name} has the weapon {weapon.name} and it is added to their abilities")
 
-
+    def attack(self):
+        damage_amt = 0
+        for ability in self.abilities:
+            damage_amt += ability.attack()
+        return damage_amt
 
     def defend(self, incoming_damage: int):
         block_amt = 0
@@ -52,22 +66,23 @@ class Hero:
 
     def is_alive(self):
         if self.current_health <= 0:
-            print(f"The hero {self.name}, is no longer alive.")
+            print(f"The hero {self.name}, is very much dead :(")
         elif self.current_health > 0: 
             print(f"The hero {self.name}, is alive")
 
+    def add_kill(self, num_kills):
+        self.kills += num_kills
+
+    def add_death(self, num_deaths):
+        self.deaths += num_deaths
+
+    
+
 
     
 
     
-            
-if __name__ == "__main__":
-    # If you run this file from the terminal
-    # this block is executed.
-    hero = Hero("Wonder Woman")
-    weapon = Weapon("Lasso of Truth", 90)
-    hero.add_weapon(weapon)
-    print(hero.attack())
+
 
 
 
